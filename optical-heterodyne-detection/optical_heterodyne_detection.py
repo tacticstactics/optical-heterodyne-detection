@@ -26,7 +26,7 @@ oplcommon2=100 #Common Path Length 2
 opl1 =100 
 opl2= 100
 
-wl = 63.3; #wavelength
+wl = 7.80; #wavelength
 
 PT1 = 0.5 # PT: Power Transmission of Beam splitter
 
@@ -90,10 +90,11 @@ ax3 = fig.add_subplot(3, 1, 3)
 
 ax1.plot(tcol,signalcol)
 #ax1.set_ylim(-3,3)
+ax1.set_ylabel("RF signal")
 
 ax2.plot(tcol,Port1_powercol,tcol,Port2_powercol)
-ax2.set_xlabel("time")
-ax2.set_ylabel("Power")
+
+ax2.set_ylabel("Optical Power")
 ax2.set_ylim(0,2.1)
 ax2.grid()
 
