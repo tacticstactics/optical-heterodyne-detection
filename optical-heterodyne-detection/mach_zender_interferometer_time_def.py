@@ -1,11 +1,13 @@
 
 #mach_zender_interferometer_time_def.py
+#
 
 import math
 import numpy as np
 
 
-def propagate1(wl=0.633,no=1, opl1=1, opl2=1, Ein=np.array([[1],[0]])):
+
+def propagate1(wl, no=1, opl1=1, opl2=1, Ein=np.array([[1],[0]])):
 
     propagatematrix1 = np.array([[np.exp(1j*wl*no*opl1),0],[0,np.exp(1j*wl*no*opl2)]]);
 
@@ -14,18 +16,26 @@ def propagate1(wl=0.633,no=1, opl1=1, opl2=1, Ein=np.array([[1],[0]])):
     return Eout
 
 
+def propagate2(wl1, wl2, no=1, opl1=1, opl2=1, Ein=np.array([[1],[0]])):
+
+    propagatematrix1 = np.array([[np.exp(1j*wl1*no*opl1),0],[0,np.exp(1j*wl2*no*opl2)]]);
+
+    Eout = np.dot(propagatematrix1,Ein)
+    
+    return Eout
+
 
 def beamsplitter(PT,Ein):
 
    # See Wikipedia for details. https://en.wikipedia.org/wiki/Beam_splitter       
 
-    #Dielectric
+    #Dielectric type 
      #phiT = 0
      #phiR = 0
      #phiO = 0
 
 
-     #Symmetric
+     #Symmetric type
      phiT = 0
      phiR = -0.5 * np.pi    
      phiO = 0.5 * np.pi

@@ -13,7 +13,7 @@ samplerate = 2048 # Sampling Frequency
 
 stept = 1/samplerate
 
-amp_c = 2*3.14
+amp_c = 1*3.14
 freq_am = 2
 md = 1 # modulation depth. 1 = 100 %
 dc_offset = 0 # DC offset
@@ -26,15 +26,16 @@ oplcommon2=100 #Common Path Length 2
 opl1 =100 
 opl2= 100
 
-wl = 7.80; #wavelength
+wl1 = 10; #wavelength1
+wl2 = 20; #wavelength2
 
 PT1 = 0.5 # PT: Power Transmission of Beam splitter
 
 # Define Input Electric Field: Both 1 and 2 port
 
 #Ein1 = np.array([[1+0j],[1-0j]]) 
-#Ein1 = np.array([[0.707+0.707j],[-0.707-0.707j]])
-Ein1 = np.array([[1 + 0j],[-1 - 0j]])
+Ein1 = np.array([[0.707+0.707j],[-0.707-0.707j]])
+#Ein1 = np.array([[1 + 0j],[-1 - 0j]])
 
 tcol = np.zeros(samplerate)
 signalcol = np.zeros(samplerate)
@@ -56,13 +57,13 @@ for ii in range(samplerate):
     signal = amp_c * np.sin(2 * np.pi * freq_am * t) + dc_offset
     signalcol[ii] = signal  
     
-    Eout1 = mach_zender_interferometer_time_def.propagate1(wl, no, opl1, opl2+signal, Ein1)
+    Eout1 = mach_zender_interferometer_time_def.propagate2(wl1, wl2, no, opl1, opl2+signal, Ein1)
     Ein2 = Eout1
     
     Eout2 = mach_zender_interferometer_time_def.beamsplitter(PT1, Ein2)
     Ein3 = Eout2    
    
-    Eout3 = mach_zender_interferometer_time_def.propagate1(wl, no, oplcommon1, oplcommon2, Ein3)
+    Eout3 = mach_zender_interferometer_time_def.propagate2(wl1, wl2, no, oplcommon1, oplcommon2, Ein3)
     
     Port1_Eout = Eout3[0,0] # Trans
 
