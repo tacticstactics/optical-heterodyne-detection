@@ -25,18 +25,16 @@ oplcommon2=100 #Common Path Length 2
 
 opl1 =100 
 opl2= 100
-# Optical Path Length Difference (opl1-opl2) determines free spectral range as optical filter.
 
 wl = 63.3; #wavelength
 
 PT1 = 0.5 # PT: Power Transmission of Beam splitter
 
-# Define Input Electric Field
+# Define Input Electric Field: Both 1 and 2 port
 
-# Input Both 1 and 2 port
 #Ein1 = np.array([[1+0j],[1-0j]]) 
-Ein1 = np.array([[0.707+0.707j],[-0.707-0.707j]])
-#Ein1 = np.array([[1 + 0j],[-1 - 0j]])
+#Ein1 = np.array([[0.707+0.707j],[-0.707-0.707j]])
+Ein1 = np.array([[1 + 0j],[-1 - 0j]])
 
 tcol = np.zeros(samplerate)
 signalcol = np.zeros(samplerate)
@@ -71,8 +69,7 @@ for ii in range(samplerate):
     Port1_EFcol[ii] = Port1_Eout
 
     power_11 = (np.abs(Port1_Eout))**2 # Optical power is calculated as square of absolute electric field strength
-    Port1_powercol[ii] = power_11
-    
+    Port1_powercol[ii] = power_11    
     
     Port2_Eout = Eout3[1,0] #Reflect
     power_22 = (np.abs(Port2_Eout))**2
@@ -107,5 +104,3 @@ ax3.set_ylabel("Power Difference")
 ax3.grid()
 
 plt.show()
-
-
