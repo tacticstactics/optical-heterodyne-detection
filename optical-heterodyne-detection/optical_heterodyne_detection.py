@@ -15,7 +15,7 @@ stept = 1/samplerate
 tcol = np.linspace(0.0, stept * samplerate, samplerate, endpoint=False)
 
 amp_c = 0.01*np.pi
-freq_am = 2
+freq_rf = 2
 md = 1 # modulation depth. 1 = 100 %
 dc_offset = 0 # DC offset
 
@@ -27,8 +27,8 @@ oplcommon2=100 #Common Path Length 2
 opl1 =100 
 opl2= 100
 
-wl1 = 100; #wavelength1
-wl2 = 100; #wavelength2
+wl1 = 0.01; #wavelength1
+wl2 = 0.01; #wavelength2
 
 PT1 = 0.5 # PT: Power Transmission of Beam splitter
 
@@ -57,7 +57,7 @@ for ii in range(samplerate):
     
     t = tcol[ii]
 
-    signal = amp_c * np.sin(2 * np.pi * freq_am * t) + dc_offset
+    signal = amp_c * np.sin(2 * np.pi * freq_rf * t) + dc_offset
     signalcol[ii] = signal  
     
     Eout1 = mach_zender_interferometer_time_def.propagate2(wl1, wl2, no, t, t+signal, Ein1)
