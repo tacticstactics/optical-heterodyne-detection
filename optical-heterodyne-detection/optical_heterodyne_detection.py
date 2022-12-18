@@ -14,7 +14,7 @@ stept = 1/samplerate
 
 tcol = np.linspace(0.0, stept * samplerate, samplerate, endpoint=False)
 
-amp_c = 1*3.14
+amp_c = 0.01*np.pi
 freq_am = 2
 md = 1 # modulation depth. 1 = 100 %
 dc_offset = 0 # DC offset
@@ -27,8 +27,8 @@ oplcommon2=100 #Common Path Length 2
 opl1 =100 
 opl2= 100
 
-wl1 = 10; #wavelength1
-wl2 = 10; #wavelength2
+wl1 = 100; #wavelength1
+wl2 = 100; #wavelength2
 
 PT1 = 0.5 # PT: Power Transmission of Beam splitter
 
@@ -84,11 +84,11 @@ for ii in range(samplerate):
     Port3_1_powercol[ii] = power3_1
 
     Port3_2_Eout = Eout3[1,0] #Reflect
-    power3_2 = (np.abs(Port3_2_Eout))**2
-    
-    Port3_2_powercol[ii] = power3_2
     Port3_2_EFcol[ii] = Port3_2_Eout
 
+    power3_2 = (np.abs(Port3_2_Eout))**2
+    Port3_2_powercol[ii] = power3_2
+    
     Power_diff = power3_1 - power3_2
     Power_diffcol[ii] = Power_diff
  

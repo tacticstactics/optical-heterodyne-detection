@@ -8,6 +8,7 @@ import numpy as np
 
 
 def propagate1(wl, no=1, opl1=1, opl2=1, Ein=np.array([[1],[0]])):
+    #Single Wavelength
 
     propagatematrix1 = np.array([[np.exp(1j*wl*no*opl1),0],[0,np.exp(1j*wl*no*opl2)]]);
 
@@ -17,6 +18,7 @@ def propagate1(wl, no=1, opl1=1, opl2=1, Ein=np.array([[1],[0]])):
 
 
 def propagate2(wl1, wl2, no=1, opl1=1, opl2=1, Ein=np.array([[1],[0]])):
+    #Dual Color
 
     propagatematrix1 = np.array([[np.exp(1j*wl1*no*opl1),0],[0,np.exp(1j*wl2*no*opl2)]]);
 
