@@ -13,9 +13,9 @@ print("c [m/s]")
 print(c)
 print('')
 
-samplerate = 4*16384 # Number of Points
+samplerate = 16384 # Number of Points
 
-stept = 0.5e-15 #[s]
+stept = 1e-15 #[s]
 
 print("stept [s]")
 print(f'{stept:.5E}')
@@ -25,7 +25,7 @@ tcol = np.linspace(0.0, stept * samplerate, samplerate, endpoint=False)
 
 amp_c = 0.5*3.14
 #amp_c = 0
-freq_rf = 40e9 # [Hz]
+freq_rf = 1e12 # [Hz]
 
 print("freq_rf [Hz]")
 print(f'{freq_rf:.5E}')
@@ -103,18 +103,21 @@ for ii in range(samplerate):
    
     Eout3 = optical_heterodyne_detection_def.propagate(1, 1, Ein3)
     
-    Port3_1_Eout = Eout3[0,0] # Trans
+    #Trans
+    Port3_1_Eout = Eout3[0,0]
     Port3_1_EFcol[ii] = Port3_1_Eout
 
     power3_1 = (np.abs(Port3_1_Eout))**2 # Optical power is calculated as square of absolute electric field strength
     Port3_1_powercol[ii] = power3_1
 
-    Port3_2_Eout = Eout3[1,0] #Reflect
+    #Reflect
+    Port3_2_Eout = Eout3[1,0] 
     Port3_2_EFcol[ii] = Port3_2_Eout
 
     power3_2 = (np.abs(Port3_2_Eout))**2
     Port3_2_powercol[ii] = power3_2
     
+    # Diff
     Power_diff = power3_1 - power3_2
     Power_diffcol[ii] = Power_diff
  
@@ -154,5 +157,24 @@ ax5.plot(tcol,Power_diffcol)
 ax5.set_xlabel("time [s]")
 ax5.set_ylabel("Power Difference [W]")
 ax5.grid()
+
+
+fig2 = plt.figure(figsize = (10,6), facecolor='lightblue')
+
+ax2_1 = fig2.add_subplot(3, 1, 1)
+ax2_2 = fig2.add_subplot(3, 1, 2)
+ax2_3 = fig2.add_subplot(3, 1, 3)
+
+xf = fftfreq(samplerate, stept)[:samplerate//2]
+
+Port1_powercol_f = fft(Port3_1_powercol)
+ax2_1.plot(xf, 2.0/samplerate * np.abs(Port1_powercol_f[0:samplerate//2]))
+
+Port2_powercol_f = fft(Port3_2_powercol)
+ax2_2.plot(xf, 2.0/samplerate * np.abs(Port2_powercol_f[0:samplerate//2]))
+
+Power_diffcol_f = fft(Power_diffcol)
+ax2_3.plot(xf, 2.0/samplerate * np.abs(Power_diffcol_f[0:samplerate//2]))
+
 
 plt.show()
