@@ -23,7 +23,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import mach_zender_interferometer_time_def
 from scipy.fft import fft, fftfreq
-from scipy.constants import pi, c 
+from scipy.constants import c 
 
 print('')
 print('optical-heterodyne-detection.py')
