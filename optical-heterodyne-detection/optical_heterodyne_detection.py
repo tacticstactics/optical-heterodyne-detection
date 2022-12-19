@@ -13,9 +13,9 @@ print("c [m/s]")
 print(c)
 print('')
 
-samplerate = 16384 # Number of Points
+samplerate = 4*16384 # Number of Points
 
-stept = 0.25e-15 #[s]
+stept = 0.5e-15 #[s]
 
 print("stept [s]")
 print(f'{stept:.5E}')
@@ -25,7 +25,7 @@ tcol = np.linspace(0.0, stept * samplerate, samplerate, endpoint=False)
 
 amp_c = 0.5*3.14
 #amp_c = 0
-freq_rf = 500e9 # [Hz]
+freq_rf = 40e9 # [Hz]
 
 print("freq_rf [Hz]")
 print(f'{freq_rf:.5E}')
