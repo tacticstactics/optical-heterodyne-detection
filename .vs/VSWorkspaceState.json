@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\optical-heterodyne-detection"
   ],
-  "SelectedNode": "\\optical-heterodyne-detection.sln",
+  "SelectedNode": "\\optical-heterodyne-detection\\optical_heterodyne_detection.py",
   "PreviewInSolutionExplorer": false
 }

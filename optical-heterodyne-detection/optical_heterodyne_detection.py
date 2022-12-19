@@ -1,27 +1,7 @@
-##300e6 [m/s]
-##1550e-9 [m]
-#freq=3e8/1550e-9 = 200 e12 {Hz]
-#interval = 1/200e12 = 5e-15 [s]
-
-#--
-
-# 300e3 [km/s]
-#1550e-12 [km] 
-#freq = 300e3 / 1550e-12 = 0.2 e9 = 200 e12 [Hz]
-#interval = 5e-15 [s]
-
-#--
-
-#300e3 [m/ms]
-#1550e-9 [m] 
-#freq = 300e3 / 1550e-9 = 0.19 e6 = 200 e9 [kHz]
-#interval = 5e-12 [ms]
-
-
 
 import numpy as np
 import matplotlib.pyplot as plt
-import mach_zender_interferometer_time_def
+import optical_heterodyne_detection_def
 from scipy.fft import fft, fftfreq
 from scipy.constants import c 
 
@@ -35,7 +15,7 @@ print('')
 
 samplerate = 16384 # Number of Points
 
-stept = 1e-15 #[s]
+stept = 0.25e-15 #[s]
 
 print("stept [s]")
 print(f'{stept:.5E}')
@@ -43,8 +23,9 @@ print('')
 
 tcol = np.linspace(0.0, stept * samplerate, samplerate, endpoint=False)
 
-amp_c = 1
-freq_rf = 100e9 # [Hz]
+amp_c = 0.5*3.14
+#amp_c = 0
+freq_rf = 500e9 # [Hz]
 
 print("freq_rf [Hz]")
 print(f'{freq_rf:.5E}')
@@ -103,9 +84,9 @@ for ii in range(samplerate):
     signal = amp_c * np.sin(2 * np.pi * freq_rf * t) + dc_offset
     signalcol[ii] = signal  
     
-    opl1 = t * c # [m]
-    opl2 = t * c + signal*wl2 #[m]
-    Eout1 = mach_zender_interferometer_time_def.propagate2(wl1, wl2, no, opl1, opl2, Ein1)
+    phase1 = 2*np.pi * freq1 * t # [rad]
+    phase2 = 2*np.pi * freq1 * t + signal #[rad]
+    Eout1 = optical_heterodyne_detection_def.propagate(phase1, phase2, Ein1)
     
 
     Port1_1_Eout = Eout1[0,0] # Frequency modulated
@@ -117,10 +98,10 @@ for ii in range(samplerate):
 
     Ein2 = Eout1
 
-    Eout2 = mach_zender_interferometer_time_def.beamsplitter(PT1, Ein2)
+    Eout2 = optical_heterodyne_detection_def.beamsplitter(PT1, Ein2)
     Ein3 = Eout2    
    
-    Eout3 = mach_zender_interferometer_time_def.propagate2(wl1, wl2, no, oplcommon1, oplcommon2, Ein3)
+    Eout3 = optical_heterodyne_detection_def.propagate(1, 1, Ein3)
     
     Port3_1_Eout = Eout3[0,0] # Trans
     Port3_1_EFcol[ii] = Port3_1_Eout
@@ -148,15 +129,16 @@ ax4 = fig.add_subplot(5, 1, 4)
 ax5 = fig.add_subplot(5, 1, 5)
 
 ax1.plot(tcol,signalcol)
-#ax1.set_ylim(-3,3)
-ax1.set_ylabel("RF signal")
+#ax1.set_ylim(-3.14,3.14)
+ax1.set_ylabel("RF signal [rad]")
+ax1.grid()
 
-ax2.plot(tcol,np.abs(Port1_1_EFcol))
+ax2.plot(tcol,np.real(Port1_1_EFcol))
 ax2.set_ylabel("Real Part of EF")
 #ax2.set_ylim(-3, 3)
 ax2.grid()
 
-ax3.plot(tcol,np.abs(Port1_2_EFcol))
+ax3.plot(tcol,np.real(Port1_2_EFcol))
 ax3.set_ylabel("Real Part of EF")
 #ax2.set_ylim(-3, 3)
 ax3.grid()
@@ -164,13 +146,13 @@ ax3.grid()
 
 
 ax4.plot(tcol,Port3_1_powercol,tcol,Port3_2_powercol)
-ax4.set_ylabel("Optical Power")
+ax4.set_ylabel("Optical Power [W]")
 ax4.set_ylim(0,2.1)
 ax4.grid()
 
 ax5.plot(tcol,Power_diffcol)
 ax5.set_xlabel("time [s]")
-ax5.set_ylabel("Power Difference")
+ax5.set_ylabel("Power Difference [W]")
 ax5.grid()
 
 plt.show()
