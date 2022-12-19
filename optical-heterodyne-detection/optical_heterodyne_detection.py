@@ -1,29 +1,24 @@
 
---
+#--
+#300e6 [m/s]
+#1550e-9 [m]
+#freq = 3e8 / 1550 e-9 = 200 e12 {Hz]
 
-300e6 [m/s]
+#interval = 1/200e12 = 5e-15 [s]
 
-1550e-9 [m]
+#--
 
-freq = 3e8 / 1550 e-9 = 200 e12 {Hz]
+# 300e3 [km/s]
+#1550e-12 [km] 
+#freq = 300e3 / 1550e-12 = 0.2 e9 = 200 e12 [Hz]
+#interval = 5e-15 [s]
 
-time = 1/200e12 = 5e-15 [s]
+#--
 
---
-
-300e3 [km/s]
-
-1550e-12 [km] 
-
-freq = 300e3 / 1550e-12 = 0.2 e9 = 200 e12 [Hz]
-
---
-
-300e3 [m/ms]
-
-1550e-9 [m] 
-
-freq = 300e3 / 1550e-9 = 0.19 e6 = 200 e9 [kHz]
+#300e3 [m/ms]
+#1550e-9 [m] 
+#freq = 300e3 / 1550e-9 = 0.19 e6 = 200 e9 [kHz]
+#interval = 5e-12 [ms]
 
 
 
@@ -40,20 +35,24 @@ print('')
 print("c [m/s]")
 print(c)
 
+c_ms = 1e-3 * c
+print("c_ms [m/ms]")
+print(c_ms)
 
-samplerate = 4096 # Sampling Frequency
 
-stept = 1e-12/samplerate
+samplerate = 16384 # Sampling Frequency
 
-print("stept [s]")
+stept = 1e3 * (1e-15/samplerate) #[ms]
+
+print("stept [ms]")
 print(stept)
 
 tcol = np.linspace(0.0, stept * samplerate, samplerate, endpoint=False)
 
 amp_c = 0.0000000*pi
-freq_rf = 1e12
+freq_rf = 1e12 # [kHz]
 
-print("freq_rf [Hz]")
+print("freq_rf [kHz]")
 print(freq_rf)
 
 md = 1 # modulation depth. 1 = 100 %
@@ -67,15 +66,15 @@ oplcommon2=100 #Common Path Length 2
 opl1 =100 
 opl2= 100
 
-wl1 = 1550e3; #wavelength1
-wl2 = 1550e3; #wavelength2
-f1 = c / wl1
-print("f1")
-print(f1)
+wl1 = 1550e-9; #wavelength1 [m]
+wl2 = 1550e-9; #wavelength2 [m]
+f1_kHz = c_ms / wl1
+print("f1 [kHz]")
+print(f1_kHz)
 
-f2 = c / wl2
-print("f2")
-print(f2)
+f2_kHz = c_ms / wl2
+print("f2 [kHz]")
+print(f2_kHz)
 
 PT1 = 0.5 # PT: Power Transmission of Beam splitter
 
@@ -107,8 +106,8 @@ for ii in range(samplerate):
     signal = amp_c * np.sin(2 * np.pi * freq_rf * t) + dc_offset
     signalcol[ii] = signal  
     
-    opl1 = t * c
-    opl2 = (t + signal) * c
+    opl1 = t * c_ms # [m]
+    opl2 = (t + signal) * c_ms #[m]
     Eout1 = mach_zender_interferometer_time_def.propagate2(wl1, wl2, no, opl1, opl2, Ein1)
     
 
@@ -173,7 +172,7 @@ ax4.set_ylim(0,2.1)
 ax4.grid()
 
 ax5.plot(tcol,Power_diffcol)
-ax5.set_xlabel("time")
+ax5.set_xlabel("time [ms]")
 ax5.set_ylabel("Power Difference")
 ax5.grid()
 

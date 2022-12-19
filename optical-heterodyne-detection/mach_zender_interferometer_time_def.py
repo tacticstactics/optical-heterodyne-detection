@@ -5,7 +5,8 @@
 import math
 import numpy as np
 
-
+#wl [m]
+#opl [m]
 
 def propagate1(wl, no=1, opl1=1, opl2=1, Ein=np.array([[1],[0]])):
     #Single Wavelength
