@@ -1,9 +1,6 @@
-
-#--
-#300e6 [m/s]
-#1550e-9 [m]
-#freq = 3e8 / 1550 e-9 = 200 e12 {Hz]
-
+##300e6 [m/s]
+##1550e-9 [m]
+#freq=3e8/1550e-9 = 200 e12 {Hz]
 #interval = 1/200e12 = 5e-15 [s]
 
 #--
@@ -34,26 +31,24 @@ print('')
 
 print("c [m/s]")
 print(c)
+print('')
 
-c_ms = 1e-3 * c
-print("c_ms [m/ms]")
-print(c_ms)
+samplerate = 16384 # Number of Points
 
+stept = 1e-15 #[s]
 
-samplerate = 16384 # Sampling Frequency
-
-stept = 1e3 * (1e-15/samplerate) #[ms]
-
-print("stept [ms]")
-print(stept)
+print("stept [s]")
+print(f'{stept:.5E}')
+print('')
 
 tcol = np.linspace(0.0, stept * samplerate, samplerate, endpoint=False)
 
-amp_c = 0.0000000*pi
-freq_rf = 1e12 # [kHz]
+amp_c = 1
+freq_rf = 100e9 # [Hz]
 
-print("freq_rf [kHz]")
-print(freq_rf)
+print("freq_rf [Hz]")
+print(f'{freq_rf:.5E}')
+print('')
 
 md = 1 # modulation depth. 1 = 100 %
 dc_offset = 0 # DC offset
@@ -68,13 +63,15 @@ opl2= 100
 
 wl1 = 1550e-9; #wavelength1 [m]
 wl2 = 1550e-9; #wavelength2 [m]
-f1_kHz = c_ms / wl1
-print("f1 [kHz]")
-print(f1_kHz)
+freq1 = c / wl1
+print("freq1 [Hz]")
+print(f'{freq1:.5E}')
+print("")
 
-f2_kHz = c_ms / wl2
-print("f2 [kHz]")
-print(f2_kHz)
+freq2 = c / wl2
+print("freq2 [Hz]")
+print(f'{freq2:.5E}')
+print("")
 
 PT1 = 0.5 # PT: Power Transmission of Beam splitter
 
@@ -106,8 +103,8 @@ for ii in range(samplerate):
     signal = amp_c * np.sin(2 * np.pi * freq_rf * t) + dc_offset
     signalcol[ii] = signal  
     
-    opl1 = t * c_ms # [m]
-    opl2 = (t + signal) * c_ms #[m]
+    opl1 = t * c # [m]
+    opl2 = t * c + signal*wl2 #[m]
     Eout1 = mach_zender_interferometer_time_def.propagate2(wl1, wl2, no, opl1, opl2, Ein1)
     
 
@@ -172,7 +169,7 @@ ax4.set_ylim(0,2.1)
 ax4.grid()
 
 ax5.plot(tcol,Power_diffcol)
-ax5.set_xlabel("time [ms]")
+ax5.set_xlabel("time [s]")
 ax5.set_ylabel("Power Difference")
 ax5.grid()
 
