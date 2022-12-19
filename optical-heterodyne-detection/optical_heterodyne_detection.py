@@ -161,20 +161,42 @@ ax5.grid()
 
 fig2 = plt.figure(figsize = (10,6), facecolor='lightblue')
 
-ax2_1 = fig2.add_subplot(3, 1, 1)
-ax2_2 = fig2.add_subplot(3, 1, 2)
-ax2_3 = fig2.add_subplot(3, 1, 3)
+ax2_1 = fig2.add_subplot(4, 1, 1)
+#ax2_2 = fig2.add_subplot(4, 1, 2)
+#ax2_3 = fig2.add_subplot(4, 1, 3)
+#ax2_4 = fig2.add_subplot(4, 1, 4)
 
 xf = fftfreq(samplerate, stept)[:samplerate//2]
 
+
+Port1_1_EFcol_f = fft(Port1_1_EFcol)
+Port1_2_EFcol_f = fft(Port1_2_EFcol)
+
+ax2_1.plot(xf, 2.0/samplerate * np.abs(Port1_1_EFcol_f[0:samplerate//2]), xf, 2.0/samplerate * np.abs(Port1_2_EFcol_f[0:samplerate//2]))
+
+
+fig3 = plt.figure(figsize = (10,6), facecolor='lightblue')
+
+ax3_1 = fig3.add_subplot(4, 1, 1)
+ax3_2 = fig3.add_subplot(4, 1, 2)
+ax3_3 = fig3.add_subplot(4, 1, 3)
+ax3_4 = fig3.add_subplot(4, 1, 4)
+
+
 Port1_powercol_f = fft(Port3_1_powercol)
-ax2_1.plot(xf, 2.0/samplerate * np.abs(Port1_powercol_f[0:samplerate//2]))
+#ax2_1.plot(xf, 2.0/samplerate * np.abs(Port1_powercol_f[0:samplerate//2]))
 
 Port2_powercol_f = fft(Port3_2_powercol)
-ax2_2.plot(xf, 2.0/samplerate * np.abs(Port2_powercol_f[0:samplerate//2]))
+ax3_2.plot(xf, 2.0/samplerate * np.abs(Port1_powercol_f[0:samplerate//2]))
+ax3_2.set_ylabel("Power Spectrum")
+ax3_2.set_xlim(0,1e13)
+
+ax3_3.plot(xf, 2.0/samplerate * np.abs(Port2_powercol_f[0:samplerate//2]))
+ax3_3.set_ylabel("Power Spectrum")
+ax3_3.set_xlim(0,1e13)
 
 Power_diffcol_f = fft(Power_diffcol)
-ax2_3.plot(xf, 2.0/samplerate * np.abs(Power_diffcol_f[0:samplerate//2]))
-
+ax3_4.plot(xf, 2.0/samplerate * np.abs(Power_diffcol_f[0:samplerate//2]))
+ax3_4.set_ylabel("Power Spectrum Difference")
 
 plt.show()
