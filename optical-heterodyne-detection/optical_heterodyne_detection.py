@@ -25,7 +25,7 @@ tcol = np.linspace(0.0, stept * samplerate, samplerate, endpoint=False)
 
 amp_c = 0.5 * np.pi
 #amp_c = 0
-freq_rf = 100e9 # [Hz]
+freq_rf = 400e9 # [Hz]
 
 print("freq_rf [Hz]")
 print(f'{freq_rf:.5E}')
