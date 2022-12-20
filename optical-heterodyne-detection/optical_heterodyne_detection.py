@@ -13,9 +13,9 @@ print("c [m/s]")
 print(c)
 print('')
 
-samplerate = 16384 # Number of Points
+samplerate = 4*16384 # Number of Points
 
-stept = 1e-15 #[s]
+stept = 0.5 * 1e-15 #[s]
 
 print("stept [s]")
 print(f'{stept:.5E}')
@@ -23,9 +23,9 @@ print('')
 
 tcol = np.linspace(0.0, stept * samplerate, samplerate, endpoint=False)
 
-amp_c = 0.5*3.14
+amp_c = 0.5 * np.pi
 #amp_c = 0
-freq_rf = 1e12 # [Hz]
+freq_rf = 100e9 # [Hz]
 
 print("freq_rf [Hz]")
 print(f'{freq_rf:.5E}')
@@ -44,6 +44,9 @@ opl2= 100
 
 wl1 = 1550e-9; #wavelength1 [m]
 wl2 = 1550e-9; #wavelength2 [m]
+
+# If wl1 and wl2 are equal, homodyne. If not, heterodyne.
+
 freq1 = c / wl1
 print("freq1 [Hz]")
 print(f'{freq1:.5E}')
@@ -53,6 +56,13 @@ freq2 = c / wl2
 print("freq2 [Hz]")
 print(f'{freq2:.5E}')
 print("")
+
+freq_diff = freq1-freq2
+
+print("freq diff [Hz]")
+print(f'{freq_diff:.5E}')
+print("")
+
 
 PT1 = 0.5 # PT: Power Transmission of Beam splitter
 
@@ -81,11 +91,12 @@ for ii in range(samplerate):
     
     t = tcol[ii]
 
-    signal = amp_c * np.sin(2 * np.pi * freq_rf * t) + dc_offset
+    signal = amp_c * np.sin(2 * np.pi * freq_rf * t) + dc_offset #[rad]
     signalcol[ii] = signal  
     
-    phase1 = 2*np.pi * freq1 * t # [rad]
-    phase2 = 2*np.pi * freq1 * t + signal #[rad]
+    phase1 = 2*np.pi * freq1 * t # phase of local oscillator [rad]
+    phase2 = 2*np.pi * freq2 * t + signal #[rad]
+
     Eout1 = optical_heterodyne_detection_def.propagate(phase1, phase2, Ein1)
     
 
@@ -94,7 +105,6 @@ for ii in range(samplerate):
     
     Port1_2_Eout = Eout1[1,0] # Local Oscillator
     Port1_2_EFcol[ii] = Port1_2_Eout
-
 
     Ein2 = Eout1
 
@@ -161,8 +171,8 @@ ax5.grid()
 
 fig2 = plt.figure(figsize = (10,6), facecolor='lightblue')
 
-ax2_1 = fig2.add_subplot(4, 1, 1)
-#ax2_2 = fig2.add_subplot(4, 1, 2)
+ax2_1 = fig2.add_subplot(2, 1, 1)
+ax2_2 = fig2.add_subplot(2, 1, 2)
 #ax2_3 = fig2.add_subplot(4, 1, 3)
 #ax2_4 = fig2.add_subplot(4, 1, 4)
 
@@ -172,8 +182,8 @@ xf = fftfreq(samplerate, stept)[:samplerate//2]
 Port1_1_EFcol_f = fft(Port1_1_EFcol)
 Port1_2_EFcol_f = fft(Port1_2_EFcol)
 
-ax2_1.plot(xf, 2.0/samplerate * np.abs(Port1_1_EFcol_f[0:samplerate//2]), xf, 2.0/samplerate * np.abs(Port1_2_EFcol_f[0:samplerate//2]))
-
+ax2_1.plot(xf, 2.0/samplerate * np.abs(Port1_1_EFcol_f[0:samplerate//2]))
+ax2_2.plot(xf, 2.0/samplerate * np.abs(Port1_2_EFcol_f[0:samplerate//2]))
 
 fig3 = plt.figure(figsize = (10,6), facecolor='lightblue')
 
@@ -187,6 +197,7 @@ Port1_powercol_f = fft(Port3_1_powercol)
 #ax2_1.plot(xf, 2.0/samplerate * np.abs(Port1_powercol_f[0:samplerate//2]))
 
 Port2_powercol_f = fft(Port3_2_powercol)
+
 ax3_2.plot(xf, 2.0/samplerate * np.abs(Port1_powercol_f[0:samplerate//2]))
 ax3_2.set_ylabel("Power Spectrum")
 ax3_2.set_xlim(0,1e13)
@@ -198,5 +209,6 @@ ax3_3.set_xlim(0,1e13)
 Power_diffcol_f = fft(Power_diffcol)
 ax3_4.plot(xf, 2.0/samplerate * np.abs(Power_diffcol_f[0:samplerate//2]))
 ax3_4.set_ylabel("Power Spectrum Difference")
+ax3_4.set_xlim(0,1e13)
 
 plt.show()
