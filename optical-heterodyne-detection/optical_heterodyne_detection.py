@@ -42,7 +42,7 @@ oplcommon2=100 #Common Path Length 2
 opl1 =100 
 opl2= 100
 
-wl1 = 1550e-9; #wavelength1 [m]
+wl1 = 1570e-9; #wavelength1 [m]
 wl2 = 1550e-9; #wavelength2 [m]
 
 # If wl1 and wl2 are equal, homodyne. If not, heterodyne.
@@ -183,32 +183,32 @@ Port1_1_EFcol_f = fft(Port1_1_EFcol)
 Port1_2_EFcol_f = fft(Port1_2_EFcol)
 
 ax2_1.plot(xf, 2.0/samplerate * np.abs(Port1_1_EFcol_f[0:samplerate//2]))
+ax2_1.set_xlim(190e12,200e12)
+
 ax2_2.plot(xf, 2.0/samplerate * np.abs(Port1_2_EFcol_f[0:samplerate//2]))
+ax2_2.set_xlim(190e12,200e12)
 
 fig3 = plt.figure(figsize = (10,6), facecolor='lightblue')
 
-ax3_1 = fig3.add_subplot(4, 1, 1)
-ax3_2 = fig3.add_subplot(4, 1, 2)
-ax3_3 = fig3.add_subplot(4, 1, 3)
-ax3_4 = fig3.add_subplot(4, 1, 4)
+ax3_1 = fig3.add_subplot(3, 1, 1)
+ax3_2 = fig3.add_subplot(3, 1, 2)
+ax3_3 = fig3.add_subplot(3, 1, 3)
 
 
 Port1_powercol_f = fft(Port3_1_powercol)
-#ax2_1.plot(xf, 2.0/samplerate * np.abs(Port1_powercol_f[0:samplerate//2]))
-
 Port2_powercol_f = fft(Port3_2_powercol)
 
-ax3_2.plot(xf, 2.0/samplerate * np.abs(Port1_powercol_f[0:samplerate//2]))
-ax3_2.set_ylabel("Power Spectrum")
-ax3_2.set_xlim(0,1e13)
+ax3_1.plot(xf, 2.0/samplerate * np.abs(Port1_powercol_f[0:samplerate//2]))
+ax3_1.set_ylabel("Power Spectrum")
+ax3_1.set_xlim(-1e12,10e12)
 
-ax3_3.plot(xf, 2.0/samplerate * np.abs(Port2_powercol_f[0:samplerate//2]))
-ax3_3.set_ylabel("Power Spectrum")
-ax3_3.set_xlim(0,1e13)
+ax3_2.plot(xf, 2.0/samplerate * np.abs(Port2_powercol_f[0:samplerate//2]))
+ax3_2.set_ylabel("Power Spectrum")
+ax3_2.set_xlim(-1e12,10e12)
 
 Power_diffcol_f = fft(Power_diffcol)
-ax3_4.plot(xf, 2.0/samplerate * np.abs(Power_diffcol_f[0:samplerate//2]))
-ax3_4.set_ylabel("Power Spectrum Difference")
-ax3_4.set_xlim(0,1e13)
+ax3_3.plot(xf, 2.0/samplerate * np.abs(Power_diffcol_f[0:samplerate//2]))
+ax3_3.set_ylabel("Power Spectrum Difference")
+ax3_3.set_xlim(-1e12,10e12)
 
 plt.show()
