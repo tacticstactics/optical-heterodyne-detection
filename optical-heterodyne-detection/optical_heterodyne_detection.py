@@ -42,7 +42,8 @@ oplcommon2=100 #Common Path Length 2
 opl1 =100 
 opl2= 100
 
-wl1 = 1570e-9; #wavelength1 [m]
+#wl1 = 1570e-9; #wavelength1 [m] Heterodyne
+wl1 = 1550e-9; #wavelength1 [m] Homodyne
 wl2 = 1550e-9; #wavelength2 [m]
 
 # If wl1 and wl2 are equal, homodyne. If not, heterodyne.
