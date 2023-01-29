@@ -166,7 +166,7 @@ ax4.grid()
 
 ax5.plot(tcol,Power_diffcol)
 ax5.set_xlabel("time [s]")
-ax5.set_ylabel("Power Difference [W]")
+ax5.set_ylabel("Power Difference between two detectors[W]")
 ax5.grid()
 
 
