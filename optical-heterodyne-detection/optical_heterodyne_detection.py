@@ -1,4 +1,5 @@
 
+import random
 import numpy as np
 import matplotlib.pyplot as plt
 import optical_heterodyne_detection_def
@@ -92,7 +93,7 @@ for ii in range(samplerate):
     
     t = tcol[ii]
 
-    signal = amp_c * np.sin(2 * np.pi * freq_rf * t) + dc_offset #[rad]
+    signal = amp_c * np.sin(2 * np.pi * freq_rf * t) + dc_offset + 0.1*random.random() #[rad]
     signalcol[ii] = signal  
     
     phase1 = 2*np.pi * freq1 * t # phase of local oscillator [rad]
