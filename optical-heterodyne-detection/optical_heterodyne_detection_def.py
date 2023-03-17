@@ -1,9 +1,6 @@
-
 #optical_heterodyne_detection_def
 
-import math
 import numpy as np
-
 
 def propagate(phase1, phase2, Ein=np.array([[1],[0]])):
 
@@ -36,7 +33,7 @@ def beamsplitter(PT,Ein):
 
      Theta1 = np.arctan(R/T) # Split Raio in Radian   
          
-     BSmatrix1 = np.dot(np.exp(1J*phiO),np.array([[math.sin(Theta1)*np.exp(1J*phiR),math.cos(Theta1)*np.exp(-1J*phiT)],[math.cos(Theta1)*np.exp(1j*phiT),-1*math.sin(Theta1)*np.exp(-1J*phiR)]]))
+     BSmatrix1 = np.dot(np.exp(1J*phiO),np.array([[np.sin(Theta1)*np.exp(1J*phiR),np.cos(Theta1)*np.exp(-1J*phiT)],[np.cos(Theta1)*np.exp(1j*phiT),-1*np.sin(Theta1)*np.exp(-1J*phiR)]]))
      
      Eout = np.dot(BSmatrix1, Ein)
 

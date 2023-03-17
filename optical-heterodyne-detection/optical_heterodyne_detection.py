@@ -43,8 +43,7 @@ oplcommon2=100 #Common Path Length 2
 opl1 =100 
 opl2= 100
 
-#wl1 = 1570e-9; #wavelength1 [m] Heterodyne
-wl1 = 1550e-9; #wavelength1 [m] Homodyne
+wl1 = 1550e-9; #wavelength1 [m] 
 wl2 = 1550e-9; #wavelength2 [m]
 
 # If wl1 and wl2 are equal, homodyne. If not, heterodyne.
@@ -167,7 +166,7 @@ ax4.grid()
 
 ax5.plot(tcol,Power_diffcol)
 ax5.set_xlabel("time [s]")
-ax5.set_ylabel("Power Difference between two detectors[W]")
+ax5.set_ylabel("Power Difference [W]")
 ax5.grid()
 
 
@@ -186,9 +185,11 @@ Port1_2_EFcol_f = fft(Port1_2_EFcol)
 
 ax2_1.plot(xf, 2.0/samplerate * np.abs(Port1_1_EFcol_f[0:samplerate//2]))
 ax2_1.set_xlim(190e12,200e12)
+ax2_1.set_ylabel("Absolute of Electric field")
 
 ax2_2.plot(xf, 2.0/samplerate * np.abs(Port1_2_EFcol_f[0:samplerate//2]))
 ax2_2.set_xlim(190e12,200e12)
+ax2_2.set_ylabel("Absolute of Electric field")
 
 fig3 = plt.figure(figsize = (10,6), facecolor='lightblue')
 
