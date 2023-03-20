@@ -15,7 +15,6 @@ print(c)
 print('')
 
 samplerate = 4*16384 # Number of Points
-
 stept = 0.5 * 1e-15 #[s]
 
 print("stept [s]")
