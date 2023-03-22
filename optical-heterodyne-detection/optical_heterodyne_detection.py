@@ -43,7 +43,7 @@ opl1 =100
 opl2= 100
 
 wl1 = 1550e-9; #wavelength1 [m] 
-wl2 = 1550e-9; #wavelength2 [m]
+wl2 = 1551e-9; #wavelength2 [m]
 
 # If wl1 and wl2 are equal, homodyne. If not, heterodyne.
 
@@ -72,8 +72,53 @@ PT1 = 0.5 # PT: Power Transmission of Beam splitter
 Ein1 = np.array([[0.707+0.707j],[-0.707-0.707j]])
 #Ein1 = np.array([[1 + 0j],[-1 - 0j]])
 
-#tcol = np.zeros(samplerate)
-signalcol = np.zeros(samplerate)
+
+
+sinesignalcol = amp_c * np.sin(2 * np.pi * freq_rf * tcol) + dc_offset + 0.1*random.random() #[rad]
+
+#prbs
+amp_prbs = 0.5*np.pi
+
+
+# Random_signal generation
+
+a_range = [0, 10]
+a = np.random.rand(samplerate) * (a_range[1]-a_range[0]) + a_range[0] # range for amplitude
+
+b_range = [300, 600]
+b = np.random.rand(samplerate) *(b_range[1]-b_range[0]) + b_range[0] # range for frequency
+b = np.round(b)
+b = b.astype(int)
+
+b[0] = 0
+
+for i in range(1,np.size(b)):
+    b[i] = b[i-1]+b[i]
+
+i=0
+random_signal = np.zeros(samplerate)
+while b[i]<np.size(random_signal):
+    k = b[i]
+    random_signal[k:] = a[i]
+    i=i+1
+
+a = np.zeros(samplerate)
+j = 0
+while j < samplerate:
+    a[j] = amp_prbs
+    a[j+1] = 0
+    j = j+2
+
+i=0
+prbs1 = np.zeros(samplerate)
+while b[i]<np.size(prbs1):
+    k = b[i]
+    prbs1[k:] = a[i]
+    i=i+1
+
+
+signalcol = prbs1
+#signalcol = sinesignalcol
 
 Port1_1_EFcol = np.zeros(samplerate)
 Port1_2_EFcol = np.zeros(samplerate)
@@ -91,8 +136,7 @@ for ii in range(samplerate):
     
     t = tcol[ii]
 
-    signal = amp_c * np.sin(2 * np.pi * freq_rf * t) + dc_offset + 0.1*random.random() #[rad]
-    signalcol[ii] = signal  
+    signal = signalcol[ii]
     
     phase1 = 2*np.pi * freq1 * t # phase of local oscillator [rad]
     phase2 = 2*np.pi * freq2 * t + signal #[rad]
