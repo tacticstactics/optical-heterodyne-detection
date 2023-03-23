@@ -14,7 +14,7 @@ print("c [m/s]")
 print(c)
 print('')
 
-samplerate = 4*16384 # Number of Points
+samplerate = 1*16384 # Number of Points
 stept = 0.5 * 1e-15 #[s]
 
 print("stept [s]")
@@ -23,14 +23,14 @@ print('')
 
 tcol = np.linspace(0.0, stept * samplerate, samplerate, endpoint=False)
 
-amp_c = 0.5 * np.pi
-#amp_c = 0
+
 freq_rf = 400e9 # [Hz]
 
 print("freq_rf [Hz]")
 print(f'{freq_rf:.5E}')
 print('')
 
+amp_c = 0.5 * np.pi
 md = 1 # modulation depth. 1 = 100 %
 dc_offset = 0 # DC offset
 
@@ -43,7 +43,7 @@ opl1 =100
 opl2= 100
 
 wl1 = 1550e-9; #wavelength1 [m] 
-wl2 = 1551e-9; #wavelength2 [m]
+wl2 = 1550e-9; #wavelength2 [m]
 
 # If wl1 and wl2 are equal, homodyne. If not, heterodyne.
 
@@ -66,12 +66,11 @@ print("")
 
 PT1 = 0.5 # PT: Power Transmission of Beam splitter
 
-# Define Input Electric Field: Both 1 and 2 port
+# Define Input Electric Field of two light beams: Both 1 and 2 port
 
 #Ein1 = np.array([[1+0j],[1-0j]]) 
 Ein1 = np.array([[0.707+0.707j],[-0.707-0.707j]])
 #Ein1 = np.array([[1 + 0j],[-1 - 0j]])
-
 
 
 sinesignalcol = amp_c * np.sin(2 * np.pi * freq_rf * tcol) + dc_offset + 0.1*random.random() #[rad]
@@ -79,13 +78,12 @@ sinesignalcol = amp_c * np.sin(2 * np.pi * freq_rf * tcol) + dc_offset + 0.1*ran
 #prbs
 amp_prbs = 0.5*np.pi
 
-
 # Random_signal generation
 
 a_range = [0, 10]
 a = np.random.rand(samplerate) * (a_range[1]-a_range[0]) + a_range[0] # range for amplitude
 
-b_range = [300, 600]
+b_range = [600, 1200]
 b = np.random.rand(samplerate) *(b_range[1]-b_range[0]) + b_range[0] # range for frequency
 b = np.round(b)
 b = b.astype(int)
@@ -96,21 +94,21 @@ for i in range(1,np.size(b)):
     b[i] = b[i-1]+b[i]
 
 i=0
-random_signal = np.zeros(samplerate)
+random_signal = np.zeros(samplerate,dtype=complex)
 while b[i]<np.size(random_signal):
     k = b[i]
     random_signal[k:] = a[i]
     i=i+1
 
-a = np.zeros(samplerate)
+a = np.zeros(samplerate, dtype=complex)
 j = 0
 while j < samplerate:
     a[j] = amp_prbs
-    a[j+1] = 0
+    a[j+1] = -1*amp_prbs
     j = j+2
 
 i=0
-prbs1 = np.zeros(samplerate)
+prbs1 = np.zeros(samplerate, dtype=complex)
 while b[i]<np.size(prbs1):
     k = b[i]
     prbs1[k:] = a[i]
@@ -120,13 +118,13 @@ while b[i]<np.size(prbs1):
 signalcol = prbs1
 #signalcol = sinesignalcol
 
-Port1_1_EFcol = np.zeros(samplerate)
-Port1_2_EFcol = np.zeros(samplerate)
+Port1_1_EFcol = np.zeros(samplerate, dtype=complex)
+Port1_2_EFcol = np.zeros(samplerate, dtype=complex)
 
-Port3_1_EFcol = np.zeros(samplerate)
+Port3_1_EFcol = np.zeros(samplerate, dtype=complex)
 Port3_1_powercol = np.zeros(samplerate)
 
-Port3_2_EFcol = np.zeros(samplerate)
+Port3_2_EFcol = np.zeros(samplerate, dtype=complex)
 Port3_2_powercol = np.zeros(samplerate)
 
 Power_diffcol = np.zeros(samplerate)
@@ -139,10 +137,9 @@ for ii in range(samplerate):
     signal = signalcol[ii]
     
     phase1 = 2*np.pi * freq1 * t # phase of local oscillator [rad]
-    phase2 = 2*np.pi * freq2 * t + signal #[rad]
+    phase2 = phase1 + signal #[rad]
 
     Eout1 = optical_heterodyne_detection_def.propagate(phase1, phase2, Ein1)
-    
 
     Port1_1_Eout = Eout1[0,0] # Frequency modulated
     Port1_1_EFcol[ii] = Port1_1_Eout
@@ -155,7 +152,7 @@ for ii in range(samplerate):
     Eout2 = optical_heterodyne_detection_def.beamsplitter(PT1, Ein2)
     Ein3 = Eout2    
    
-    Eout3 = optical_heterodyne_detection_def.propagate(1, 1, Ein3)
+    Eout3 = optical_heterodyne_detection_def.propagate(0,0, Ein3)
     
     #Trans
     Port3_1_Eout = Eout3[0,0]
