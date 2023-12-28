@@ -34,19 +34,24 @@ def prbs_1(samplerate, a1_range = [0,1], b1_range = [10, 50]):
         j = j+2
         
     i=0
-    prbs1 = np.zeros(samplerate)
-    while b1[i]<np.size(prbs1):
+    rfsignalcol = np.zeros(samplerate)
+    while b1[i]<np.size(rfsignalcol):
         k = b1[i]
-        prbs1[k:] = a1[i]
+        rfsignalcol[k:] = a1[i]
         i=i+1
     
-    return prbs1
+    return rfsignalcol
 
-def prbs_2(phase1, phase2, Ein=np.array([[1],[0]])):
 
-    propagatematrix1 = np.array([[np.exp(1j*phase1),0],[0,np.exp(1j*phase2)]]);
-
-    Eout = np.dot(propagatematrix1,Ein)
+def prbs_2(samplerate, numberofpointspersymbol = 2 ** 4):
     
-    return prbs_2
+    amp_prbs = np.pi
+    
+    repetitions1 = samplerate / numberofpointspersymbol
+    
+    rand_int1 = np.random.randint(0, 2, numberofpointspersymbol) # 0 or 1
+    
+    rfsignalcol = amp_prbs * np.repeat(rand_int1, repetitions1) - 0.5*np.pi
+
+    return rfsignalcol
 
