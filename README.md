@@ -1,8 +1,5 @@
 # optical-heterodyne-detection
 
-optical-heterodyne-detection
-
-Classic only. Not intednded for quantum optics.
 
 ![Figure_1](https://user-images.githubusercontent.com/30459885/208798371-6e5c02a9-f90d-4e02-ae90-ea7845d55261.png)
 
