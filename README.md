@@ -3,6 +3,13 @@
 Optical hetero (homo) dyne for coherent communication. Phase Modulated Optical signal is mixed with local oscillator (Continuous Laser).
 Baseband signal is demodulated by Balanced detector.
 
+
+
+https://github.com/user-attachments/assets/9290e149-32d1-4d1c-b895-ed7ca4f160f0
+
+
+
+
 ![Figure_1](https://user-images.githubusercontent.com/30459885/208798371-6e5c02a9-f90d-4e02-ae90-ea7845d55261.png)
 
 Original signal.
