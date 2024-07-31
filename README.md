@@ -22,6 +22,12 @@ Generated Signal.
 
 optical-homodyne-detection
 
+
+
+https://github.com/user-attachments/assets/302736bd-6fe5-4a89-946d-9b2bb05f0061
+
+
+
 ![Figure_1](https://user-images.githubusercontent.com/30459885/208798939-92540574-b2d4-44ac-990d-1a14bd631bb1.png)
 
 Original signal
