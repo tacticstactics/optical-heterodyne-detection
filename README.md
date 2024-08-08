@@ -5,7 +5,8 @@ Baseband signal is demodulated by Balanced detector.
 
 
 
-https://github.com/user-attachments/assets/9290e149-32d1-4d1c-b895-ed7ca4f160f0
+
+https://github.com/user-attachments/assets/65edc88f-2390-4ab7-9456-d3494b598f99
 
 
 
