@@ -16,18 +16,10 @@ Real part of Electric field.
 Real part of Electric field.
 Generated Signal.
 
-![Figure_2](https://user-images.githubusercontent.com/30459885/208798377-01c23b38-b80b-42d2-9ebb-2ddd66be46f4.png)
-![Figure_3](https://user-images.githubusercontent.com/30459885/208798384-3a90b382-e70b-4724-a010-f37ba56e5637.png)
 
 optical-homodyne-detection
 
 
-
-https://github.com/user-attachments/assets/302736bd-6fe5-4a89-946d-9b2bb05f0061
-
-
-
-![Figure_1](https://user-images.githubusercontent.com/30459885/208798939-92540574-b2d4-44ac-990d-1a14bd631bb1.png)
 
 Original signal
 Real part of Electric field.
