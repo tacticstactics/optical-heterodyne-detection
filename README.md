@@ -5,13 +5,11 @@ Baseband signal is demodulated by Balanced detector.
 
 
 
+https://github.com/user-attachments/assets/20a1b17b-156c-40ce-a027-16697250a786
 
-https://github.com/user-attachments/assets/65edc88f-2390-4ab7-9456-d3494b598f99
+![output](https://github.com/user-attachments/assets/46dc1550-e019-47ca-bd2d-208173c88853)
 
 
-
-
-![Figure_1](https://user-images.githubusercontent.com/30459885/208798371-6e5c02a9-f90d-4e02-ae90-ea7845d55261.png)
 
 Original signal.
 Real part of Electric field.
