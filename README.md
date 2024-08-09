@@ -26,5 +26,3 @@ Real part of Electric field.
 Real part of Electric field.
 Generated Signal.
 
-![Figure_2](https://user-images.githubusercontent.com/30459885/208798945-86174c73-d75c-41ac-bd52-3dd667700386.png)
-![Figure_3](https://user-images.githubusercontent.com/30459885/208798950-9eda05e9-10e9-438b-8fc2-9df3252f2f1b.png)
