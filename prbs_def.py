@@ -1,3 +1,4 @@
+#prbs: pseudo random binary sequence
 import numpy as np
 
 def prbs_1(samplerate, a1_range = [0,1], b1_range = [10, 50]):
