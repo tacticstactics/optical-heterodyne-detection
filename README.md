@@ -3,7 +3,7 @@
 Optical hetero (homo) dyne for coherent communication. Phase Modulated Optical signal is mixed with local oscillator (Continuous Laser).
 Baseband signal is demodulated by Balanced detector.
 
-
+[optical_heterodyne_detection_main.ipynb](https://github.com/tacticstactics/Optical-heterodyne-detection/blob/533b28db79105d164a57330d3774f7e9ce86796f/optical_heterodyne_detection_main.ipynb)
 
 https://github.com/user-attachments/assets/20a1b17b-156c-40ce-a027-16697250a786
 
