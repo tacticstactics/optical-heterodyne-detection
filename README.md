@@ -1,6 +1,6 @@
 # optical-heterodyne-detection
 
-Jupyter notebook to visualize Optical hetero (homo) dyne.
+Visualize Optical hetero (homo) dyne.
 Phase Modulated Optical signal is mixed with local oscillator (Continuous Laser).
 Baseband signal is demodulated by Balanced detector.
 
